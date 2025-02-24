@@ -1,17 +1,38 @@
-import { TextInput, View } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import { TextInput, TextInputProps, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import { styles } from "./style";
+import { Controller, UseControllerProps } from "react-hook-form";
+import { forwardRef } from "react";
 
-type InputProps = {
-    icon: string;
-    placeholder: string;
-}
+type Props = {
+    icon: keyof typeof Feather.glyphMap;
+    formProps: UseControllerProps;
+    inputProps: TextInputProps;
+};
 
-export function Input({ icon, placeholder }: InputProps){
+const Input = forwardRef<TextInput, Props> (({ icon, formProps, inputProps }, ref) => {
     return (
-        <View style={styles.container}>
-            <TextInput />
-            <MaterialIcons name="person" size={24} color="black" />
-        </View>
-    )
-}
+        <Controller 
+            render={({ field }) => (
+                <View style={styles.container}>
+                    <View style={styles.group}>
+                        <View style={styles.icon}>
+                            <Feather name={icon} size={24} color="black" />
+                        </View>
+                        <TextInput
+                        
+                        ref={ref}
+                        value={field.value}
+                        onChangeText={field.onChange}
+                        style={styles.control}
+                        {...inputProps}
+                        />
+                    </View>
+                </View>
+            )}
+            {...formProps}
+        />
+    );
+});
+
+export { Input };
