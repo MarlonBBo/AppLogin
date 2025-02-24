@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useRef } from "react";
 import { Button } from "../Button";
 
-export function FormStepOne(){
+export function FormStepTwo(){
 
     const { control, handleSubmit, formState: {errors} } = useForm(); 
     const emailRef = useRef<TextInput>(null)
@@ -17,25 +17,8 @@ export function FormStepOne(){
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Crie sua conta</Text>
+            <Text style={styles.title}>Entrar</Text>
             
-            <Input 
-            icon="user"
-            error={errors.name?.message}
-            formProps={{
-                name: "name",
-                control,
-                rules:{
-                    required: "Nome é obrigatório"
-                }
-            }}
-            inputProps={{ 
-                placeholder: "Name",
-                onSubmitEditing: () => emailRef.current?.focus(),
-                returnKeyType: "next"
-            }}
-            />
-
             <Input 
             ref={emailRef}
             icon="mail"
